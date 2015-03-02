@@ -3,6 +3,10 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
+
+// Wait till the device is done loading
+ionic.platform.ready(function() {
+
 angular.module('stammformen', ['ionic'])
 
 .run(function($ionicPlatform) {
@@ -321,3 +325,4 @@ angular.module('stammformen', ['ionic'])
   }, true)
   
 }])
+})
