@@ -146,7 +146,7 @@ angular.module('stammformen', ['ionic'])
 .controller('HomeCtrl', ['$scope', function($scope) { 
 
 }])
-.controller('PlayCtrl', ['$scope', 'UserData', 'Helpers', function($scope, UserData, Helpers) {
+.controller('PlayCtrl', ['$scope', '$timeout', 'UserData', 'Helpers', function($scope, $timeout, UserData, Helpers) {
 
   $scope.currQData = {
     first: '',
@@ -160,6 +160,17 @@ angular.module('stammformen', ['ionic'])
     $scope.currQData.arr = UserData.getSelection()[$scope.currQData.id].split(', ')
   })
 
+  $scope.domAccess = {
+    labelFirst: '',
+    labelSecond: '',
+    labelThird: '',
+
+    correctFirst: '',
+    correctSecond: '',
+    correctThird: ''
+
+  }
+
 
 
   $scope.functions = {
@@ -167,6 +178,51 @@ angular.module('stammformen', ['ionic'])
       var rand = Helpers.random(0, UserData.getSelection().length)
       console.log("running newQ with", rand);
       $scope.currQData.id = rand
+
+      $scope.domAccess.labelFirst = '1. Stammform'
+      $scope.domAccess.labelSecond = '2. Stammform'
+      $scope.domAccess.labelThird = '3. Stammform'
+
+      $scope.domAccess.correctFirst = ''
+      $scope.domAccess.correctSecond = ''
+      $scope.domAccess.correctThird = ''
+
+      $scope.currQData.first = ''
+      $scope.currQData.second = ''
+      $scope.currQData.third = ''
+
+
+    },
+    check: function () {
+      console.log("checking");
+
+      if ($scope.currQData.arr[1] === $scope.currQData.first) {
+        $scope.domAccess.correctFirst = 'right-answer'
+      } else {
+        $scope.domAccess.correctFirst = 'wrong-answer'
+        $scope.domAccess.labelFirst = $scope.currQData.arr[1]
+      }
+
+      if ($scope.currQData.arr[2] === $scope.currQData.second) {
+        $scope.domAccess.correctSecond = 'right-answer'
+      } else {
+        $scope.domAccess.correctSecond = 'wrong-answer'
+        $scope.domAccess.labelSecond = $scope.currQData.arr[2]
+      }
+
+      if ($scope.currQData.arr[3] === $scope.currQData.third) {
+        $scope.domAccess.correctThird = 'right-answer'
+      } else {
+        $scope.domAccess.correctThird = 'wrong-answer'
+        $scope.domAccess.labelThird = $scope.currQData.arr[3]
+      }
+
+      $timeout(function () {
+        document.querySelector('.first-input').focus()
+        $scope.functions.newQ()
+      }, 5000)
+
+
     }
   }
 

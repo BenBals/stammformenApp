@@ -13,3 +13,11 @@ a.simple {
 .center {
 	text-align: center;
 }
+
+input.right-answer {
+	color: #4CD964;
+}
+
+input.wrong-answer {
+	color: #FF3B30;
+}

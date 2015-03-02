@@ -5,23 +5,23 @@
     	<h1 class="center">{{ currQData.arr[0] }}</h1>
     	
     	<label class="item item-input">
-    		<span class="input-label">1. Stammform</span>
-    		<input type="text" ng-model="currQData.first"></input>
+    		<span class="input-label">{{ domAccess.labelFirst }}</span>
+    		<input type="text" ng-model="currQData.first" ng-class="domAccess.correctFirst" class="first-input"></input>
     	</label>
 
-    	<label class="item item-input">
-    		<span class="input-label">2. Stammform</span>
-    		<input type="text" ng-model="currQData.second"></input>
+    	<label class="item item-input group-second">
+    		<span class="input-label" >{{ domAccess.labelSecond }}</span>
+    		<input type="text" ng-model="currQData.second" ng-class="domAccess.correctSecond"></input>
     	</label>
 
-    	<label class="item item-input">
-    		<span class="input-label">3. Stammform</span>
-    		<input type="text" ng-model="currQData.third"></input>
+    	<label class="item item-input group-third">
+    		<span class="input-label">{{ domAccess.labelThird }}</span>
+    		<input type="text" ng-model="currQData.third" ng-class="domAccess.correctThird"></input>
     	</label>
 
-    	<button class="button button-block button-positive"> Check</button>
+    	<button class="button button-block button-positive" ng-click="functions.check()"> Check</button>
 
-    	<p>{{ currQData }}</p>
+    	<!-- <pre>{{ currQData }}</pre> -->
 
     </div>
   </ion-content>
