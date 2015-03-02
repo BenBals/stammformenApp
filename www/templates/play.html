@@ -1,0 +1,28 @@
+<ion-view view-title="Play">
+  <ion-content ng-controller="PlayCtrl">
+    <div class="list">
+
+    	<h1 class="center">{{ currQData.arr[0] }}</h1>
+    	
+    	<label class="item item-input">
+    		<span class="input-label">1. Stammform</span>
+    		<input type="text" ng-model="currQData.first"></input>
+    	</label>
+
+    	<label class="item item-input">
+    		<span class="input-label">2. Stammform</span>
+    		<input type="text" ng-model="currQData.second"></input>
+    	</label>
+
+    	<label class="item item-input">
+    		<span class="input-label">3. Stammform</span>
+    		<input type="text" ng-model="currQData.third"></input>
+    	</label>
+
+    	<button class="button button-block button-positive"> Check</button>
+
+    	<p>{{ currQData }}</p>
+
+    </div>
+  </ion-content>
+</ion-view>
