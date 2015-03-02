@@ -1,0 +1,23 @@
+<ion-view view-title="Einstellungen">
+  <ion-content ng-controller="SettingsCtrl">
+
+	<div class="list">
+		<div class="item item-divider">Lektionen</div>
+
+		<div ng-repeat="number in lekData.numbers" class="item">
+
+			Lektion {{ number }}
+
+			<label class="toggle toggle-right">
+			   <input type="checkbox" ng-model="lekData.selectedObj[number]">
+			   <div class="track">
+			     <div class="handle"></div>
+			   </div>
+			</label>
+
+		</div>
+
+	</div>
+
+  </ion-content>
+</ion-view>
