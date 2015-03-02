@@ -5,8 +5,6 @@
 // the 2nd parameter is an array of 'requires'
 
 // Wait till the device is done loading
-ionic.platform.ready(function() {
-
 angular.module('stammformen', ['ionic'])
 
 .run(function($ionicPlatform) {
@@ -325,4 +323,3 @@ angular.module('stammformen', ['ionic'])
   }, true)
   
 }])
-})
