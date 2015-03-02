@@ -167,7 +167,9 @@ angular.module('stammformen', ['ionic'])
 
     correctFirst: '',
     correctSecond: '',
-    correctThird: ''
+    correctThird: '',
+
+    output: ''
 
   }
 
@@ -175,6 +177,9 @@ angular.module('stammformen', ['ionic'])
 
   $scope.functions = {
     newQ: function () {
+
+      $scope.domAccess.output += 'running newQ \n'
+
       var rand = Helpers.random(0, UserData.getSelection().length)
       console.log("running newQ with", rand);
       $scope.currQData.id = rand
@@ -195,22 +200,23 @@ angular.module('stammformen', ['ionic'])
     },
     check: function () {
       console.log("checking");
+      $scope.domAccess.output += 'checking \n'
 
-      if ($scope.currQData.arr[1] === $scope.currQData.first) {
+      if ($scope.currQData.arr[1] === $scope.currQData.first.toLowerCase()) {
         $scope.domAccess.correctFirst = 'right-answer'
       } else {
         $scope.domAccess.correctFirst = 'wrong-answer'
         $scope.domAccess.labelFirst = $scope.currQData.arr[1]
       }
 
-      if ($scope.currQData.arr[2] === $scope.currQData.second) {
+      if ($scope.currQData.arr[2] === $scope.currQData.second.toLowerCase()) {
         $scope.domAccess.correctSecond = 'right-answer'
       } else {
         $scope.domAccess.correctSecond = 'wrong-answer'
         $scope.domAccess.labelSecond = $scope.currQData.arr[2]
       }
 
-      if ($scope.currQData.arr[3] === $scope.currQData.third) {
+      if ($scope.currQData.arr[3] === $scope.currQData.third.toLowerCase()) {
         $scope.domAccess.correctThird = 'right-answer'
       } else {
         $scope.domAccess.correctThird = 'wrong-answer'
