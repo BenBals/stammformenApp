@@ -21,3 +21,7 @@ input.right-answer {
 input.wrong-answer {
 	color: #FF3B30;
 }
+
+.toggle-right {
+	float: right;
+}

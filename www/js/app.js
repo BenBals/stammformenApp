@@ -29,6 +29,10 @@ angular.module('stammformen', ['ionic'])
     url: '/play',
     templateUrl: 'templates/play.html'
   })
+  .state('settings', {
+    url: '/settings',
+    templateUrl: 'templates/settings.html'
+  })
 
   $urlRouterProvider.otherwise('/')
 
@@ -83,6 +87,30 @@ angular.module('stammformen', ['ionic'])
         allQ = allQ.concat(data[key])
       };
       return allQ
+    },
+
+    getRaw: function() {
+      return data
+    },
+
+    getArrayOfLektionNumbers: function() {
+      var arrOfLektionNumbers = []
+
+      angular.forEach(this.getRaw(), function (val, key) {
+        arrOfLektionNumbers.push(parseInt(key))
+      })
+
+      return arrOfLektionNumbers
+    },
+
+    getArrayOfLektionNumbersAsStrings: function() {
+      var arrOfLektionNumbers = []
+
+      angular.forEach(this.getRaw(), function (val, key) {
+        arrOfLektionNumbers.push(String(key))
+      })
+
+      return arrOfLektionNumbers
     }
 
   }
@@ -127,6 +155,50 @@ angular.module('stammformen', ['ionic'])
           window.localStorage.selection += '||' + arr[i]
         }
       };
+    },
+
+    getSelectedLektions: function () {
+      if ($window.localStorage.selection === '' || $window.localStorage.selection === undefined) {
+        return Questions.getArrayOfLektionNumbersAsStrings()
+      } else {
+        return $window.localStorage.selection.split('||')
+      }
+    },
+
+    getSelectedLektionsAsObj: function() {
+      var result = {}
+      var arrOfLektionNumbers = Questions.getArrayOfLektionNumbers()
+
+      selected = this.getSelectedLektions()
+
+      console.log(selected)
+
+      for (var i = arrOfLektionNumbers.length - 1; i >= 0; i--) {
+        if (selected.indexOf(String(arrOfLektionNumbers[i])) != -1) {
+          result[arrOfLektionNumbers[i]] = true
+        } else {
+          result[arrOfLektionNumbers[i]] = false
+        }
+      };
+      return result
+    },
+
+    setSelectionFromObj: function(obj) {
+      console.log(obj);
+
+      $window.localStorage.selection = ""
+
+      angular.forEach(obj, function (val, key) {
+
+        if (val) {
+          if ($window.localStorage.selection === "") {
+            $window.localStorage.selection = key
+          } else {
+            $window.localStorage.selection += ('||' + key)
+          }
+        };
+
+      })
     }
 
   }
@@ -234,4 +306,18 @@ angular.module('stammformen', ['ionic'])
 
   $scope.functions.newQ()
 
+}])
+.controller('SettingsCtrl', ['$scope', 'UserData', 'Questions', function ($scope, UserData, Questions) {
+
+  $scope.lekData = {}
+
+  $scope.lekData.numbers = Questions.getArrayOfLektionNumbers()
+  $scope.lekData.selectedObj = UserData.getSelectedLektionsAsObj()
+
+  $scope.$watch('lekData.selectedObj', function(newVal, oldVal) {
+
+    UserData.setSelectionFromObj($scope.lekData.selectedObj)
+
+  }, true)
+  
 }])
