@@ -6,17 +6,17 @@
     	
     	<label class="item item-input">
     		<span class="input-label">{{ domAccess.labelFirst }}</span>
-    		<input type="text" ng-model="currQData.first" ng-class="domAccess.correctFirst" class="first-input"></input>
+    		<input type="text" ng-model="currQData.first" ng-class="domAccess.correctFirst" class="first-input" autocorrcet="off" autocapitalize="off" spellcheck="false"></input>
     	</label>
 
     	<label class="item item-input group-second">
     		<span class="input-label" >{{ domAccess.labelSecond }}</span>
-    		<input type="text" ng-model="currQData.second" ng-class="domAccess.correctSecond"></input>
+    		<input type="text" ng-model="currQData.second" ng-class="domAccess.correctSecond" autocorrcet="off" autocapitalize="off" spellcheck="false"></input>
     	</label>
 
     	<label class="item item-input group-third">
     		<span class="input-label">{{ domAccess.labelThird }}</span>
-    		<input type="text" ng-model="currQData.third" ng-class="domAccess.correctThird"></input>
+    		<input type="text" ng-model="currQData.third" ng-class="domAccess.correctThird" autocorrcet="off" autocapitalize="off" spellcheck="false"></input>
     	</label>
 
     	<button class="button button-block button-positive" ng-click="functions.check()"> Check</button>
