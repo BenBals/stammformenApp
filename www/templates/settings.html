@@ -2,6 +2,18 @@
   <ion-content ng-controller="SettingsCtrl">
 
 	<div class="list">
+		<div class="item item-divider">Allgemeine Einstellungen</div>
+		<div class="item">
+			
+			Leere Eingaben zu - umwandeln
+
+			<label class="toggle right">
+			   <input type="checkbox" ng-model="generalSetttings.emptyToDash">
+			   <div class="track">
+			     <div class="handle"></div>
+			   </div>
+			</label>
+		</div>
 		<div class="item item-divider">Lektionen</div>
 
 		<div ng-repeat="number in lekData.numbers" class="item">

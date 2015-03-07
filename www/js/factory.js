@@ -162,6 +162,14 @@ app
       })
     },
 
+    getEmptyToDashSettings: function() {
+      return ($window.localStorage.emptyToDashSettings === 'true') || false
+    },
+
+    setEmptyToDashSettings: function(newValue) {
+      return $window.localStorage.emptyToDashSettings = newValue
+    },
+
     //Stats
 
     getTotalTime: function() {

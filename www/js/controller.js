@@ -87,6 +87,15 @@ app
       $scope.domAccess.output += 'checking \n'
 
       var rights = 0
+      var ordinals = ['first', 'second', 'third']
+
+      if (UserData.getEmptyToDashSettings()) {
+        for (var i = 0; i < ordinals.length; i++) {
+          if ($scope.currQData[ordinals[i]] === '') {
+            $scope.currQData[ordinals[i]] = '-';
+          }
+        }
+      }
 
       if ($scope.currQData.arr[1] === $scope.currQData.first.toLowerCase()) {
         $scope.domAccess.correctFirst = 'right-answer'
@@ -127,14 +136,20 @@ app
 .controller('SettingsCtrl', ['$scope', 'UserData', 'Questions', function ($scope, UserData, Questions) {
 
   $scope.lekData = {}
+  $scope.generalSetttings = {}
 
   $scope.lekData.numbers = Questions.getArrayOfLektionNumbers()
   $scope.lekData.selectedObj = UserData.getSelectedLektionsAsObj()
 
+  $scope.generalSetttings.emptyToDash = UserData.getEmptyToDashSettings()
+
   $scope.$watch('lekData.selectedObj', function(newVal, oldVal) {
-
     UserData.setSelectionFromObj($scope.lekData.selectedObj)
+  }, true)
 
+  $scope.$watch('generalSetttings.emptyToDash', function() {
+    UserData.setEmptyToDashSettings($scope.generalSetttings.emptyToDash)
+    console.log(UserData.getEmptyToDashSettings());
   }, true)
   
 }])
