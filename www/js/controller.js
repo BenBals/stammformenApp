@@ -21,7 +21,7 @@ app
   $scope.stats.totalRights = UserData.getTotalRights()
   
 }])
-.controller('PlayCtrl', ['$scope', '$timeout', '$interval', 'UserData', 'Helpers', function($scope, $timeout, $interval, UserData, Helpers) {
+.controller('PlayCtrl', ['$scope', '$timeout', '$interval', '$compile', 'UserData', 'Helpers', function($scope, $timeout, $interval, $compile, UserData, Helpers) {
 
   $timeout(function() {
 
@@ -36,6 +36,7 @@ app
     $scope.$watch('currQData.id', function () {
       $scope.currQData.arr = UserData.getSelection()[$scope.currQData.id].split(', ')
     })
+
 
     $scope.domAccess = {
       labelFirst: '',
@@ -74,11 +75,46 @@ app
       $scope.domAccess.correctFirst = ''
       $scope.domAccess.correctSecond = ''
       $scope.domAccess.correctThird = ''
+      $scope.domAccess.correctTranslation1 = ''
+      $scope.domAccess.correctTranslation2 = ''
+      $scope.domAccess.correctTranslation3 = ''
 
       $scope.currQData.first = ''
       $scope.currQData.second = ''
       $scope.currQData.third = ''
 
+      
+      if (UserData.getTranslationSettings()) {
+        $timeout(function() {
+          var arr = $scope.currQData.arr
+          document.querySelector('.translation-list').innerHTML = ''
+
+          for (var i = 1; i < 6; i++) {
+            delete $scope.currQData['translation' + i + 'Input']
+            delete $scope.currQData['translation' + i]
+            delete $scope.domAccess['translation' + i + 'Label']
+            delete $scope.domAccess['correctTranslation' + i]
+          }
+
+          for (var i = 4; i < arr.length; i++) {
+            $scope.currQData['translation'+String(i-3)] = arr[i]
+            $scope.currQData['translation'+String(i-3)+'Input'] = ''
+            $scope.domAccess['translation'+String(i-3)+'Label'] = String(i-3) + '. Übersetzung'
+            $scope.domAccess['correctTranslation'+String(i-3)] = ''
+            var html = angular.element(" \
+              <label class='item item-input'> \
+                <span class='input-label' ng-bind='domAccess.translation" + String(i-3) + "Label'></span> \
+                <input type='text' ng-model='currQData.translation" + String(i-3) + "Input' ng-class='domAccess.correctTranslation" + String(i-3) + "' autocorrcet='off' autocapitalize='off' spellcheck='false'></input> \
+              </label> \
+            ")
+            e = angular.element(document.querySelector('.translation-list'))
+            e.append(html)
+            $compile(html)($scope)
+          };
+          console.log($scope.domAccess);
+        }, 50)
+      }
+      
 
     },
     check: function () {
@@ -121,6 +157,83 @@ app
         $scope.domAccess.labelThird = $scope.currQData.arr[3]
       }
 
+      // Translation Stuff (a lot of if)
+      if (UserData.getTranslationSettings()) {
+
+        //Check if at least one traslation
+        if ($scope.currQData.arr.length >= 5) {
+          console.log("theres at least one translation");
+          var otherSolutions = []
+          for (i = 2; i <= $scope.currQData.arr.length-4; i++) {
+            otherSolutions.push($scope.currQData['translation'+i+'Input'])
+          }
+          if ($scope.currQData.arr.indexOf($scope.currQData.translation1Input) > 3  && otherSolutions.indexOf($scope.currQData.translation1Input) === -1) {
+            $scope.domAccess.correctTranslation1 = 'right-answer'
+          }
+          else {
+            $scope.domAccess.correctTranslation1 = 'wrong-answer'
+            $scope.domAccess.translation1Label = $scope.currQData.translation1
+          }
+        }
+        if ($scope.currQData.arr.length >= 6) {
+          console.log("there are at least two translation");
+          var otherSolutions = []
+          for (i = 3; i <= $scope.currQData.arr.length-4; i++) {
+            otherSolutions.push($scope.currQData['translation'+i+'Input'])
+          }
+          if ($scope.currQData.arr.indexOf($scope.currQData.translation2Input) > 3  && otherSolutions.indexOf($scope.currQData.translation2Input) === -1) {
+            $scope.domAccess.correctTranslation2 = 'right-answer'
+          }
+          else {
+            $scope.domAccess.correctTranslation2 = 'wrong-answer'
+            $scope.domAccess.translation1Label = $scope.currQData.translation2
+          }
+        }
+        if ($scope.currQData.arr.length >= 7) {
+          console.log("there are at least three translation");
+          var otherSolutions = []
+          for (i = 4; i <= $scope.currQData.arr.length-4; i++) {
+            otherSolutions.push($scope.currQData['translation'+i+'Input'])
+          }
+          if ($scope.currQData.arr.indexOf($scope.currQData.translation3Input) > 3  && otherSolutions.indexOf($scope.currQData.translation3Input) === -1) {
+            $scope.domAccess.correctTranslation3 = 'right-answer'
+          }
+          else {
+            $scope.domAccess.correctTranslation3 = 'wrong-answer'
+            $scope.domAccess.translation3Label = $scope.currQData.translation3
+          }
+        }
+        if ($scope.currQData.arr.length >= 8) {
+          console.log("there are at least four translation");
+          var otherSolutions = []
+          for (i = 5; i <= $scope.currQData.arr.length-4; i++) {
+            otherSolutions.push($scope.currQData['translation'+i+'Input'])
+          }
+          if ($scope.currQData.arr.indexOf($scope.currQData.translation4Input) > 3  && otherSolutions.indexOf($scope.currQData.translation4Input) === -1) {
+            $scope.domAccess.correctTranslation4 = 'right-answer'
+          }
+          else {
+            $scope.domAccess.correctTranslation4 = 'wrong-answer'
+            $scope.domAccess.translation4Label = $scope.currQData.translation4
+          }
+        }
+        if ($scope.currQData.arr.length >= 9) {
+          console.log("there are at least five translation");
+          var otherSolutions = []
+          for (i = 6; i <= $scope.currQData.arr.length-4; i++) {
+            otherSolutions.push($scope.currQData['translation'+i+'Input'])
+          }
+          if ($scope.currQData.arr.indexOf($scope.currQData.translation5Input) > 3  && otherSolutions.indexOf($scope.currQData.translation5Input) === -1) {
+            $scope.domAccess.correctTranslation5 = 'right-answer'
+          }
+          else {
+            $scope.domAccess.correctTranslation5 = 'wrong-answer'
+            $scope.domAccess.translation5Label = $scope.currQData.translation5
+          }
+        }
+
+      }
+
       UserData.addToTotalRights(rights)
 
       $timeout(function () {
@@ -142,6 +255,8 @@ app
   $scope.lekData.selectedObj = UserData.getSelectedLektionsAsObj()
 
   $scope.generalSetttings.emptyToDash = UserData.getEmptyToDashSettings()
+  $scope.generalSetttings.translation = UserData.getTranslationSettings()
+
 
   $scope.$watch('lekData.selectedObj', function(newVal, oldVal) {
     UserData.setSelectionFromObj($scope.lekData.selectedObj)
@@ -149,7 +264,10 @@ app
 
   $scope.$watch('generalSetttings.emptyToDash', function() {
     UserData.setEmptyToDashSettings($scope.generalSetttings.emptyToDash)
-    console.log(UserData.getEmptyToDashSettings());
+  }, true)
+
+  $scope.$watch('generalSetttings.translation', function() {
+    UserData.setTranslationSettings($scope.generalSetttings.translation)
   }, true)
   
 }])
