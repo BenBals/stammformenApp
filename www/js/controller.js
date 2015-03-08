@@ -186,7 +186,7 @@ app
           }
           else {
             $scope.domAccess.correctTranslation2 = 'wrong-answer'
-            $scope.domAccess.translation1Label = $scope.currQData.translation2
+            $scope.domAccess.translation2Label = $scope.currQData.translation2
           }
         }
         if ($scope.currQData.arr.length >= 7) {
