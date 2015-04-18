@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 
 // Wait till the device is done loading
-app = angular.module('stammformen', ['ionic'])
+app = angular.module('stammformen', ['ionic', 'ionic.contrib.ui.tinderCards'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -30,6 +30,10 @@ app = angular.module('stammformen', ['ionic'])
   .state('play', {
     url: '/play',
     templateUrl: 'templates/play.html'
+  })
+  .state('swipe', {
+    url: '/swipe',
+    templateUrl: 'templates/swipe.html'
   })
   .state('settings', {
     url: '/settings',

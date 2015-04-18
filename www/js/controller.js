@@ -271,3 +271,6 @@ app
   }, true)
   
 }])
+.controller('SwipeCtrl', ['$scope', 'TDCardDelegate', function($scope, TDCardDelegate){
+  
+}])
